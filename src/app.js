@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 connectDB()
+require('../src/config/adminSeed')
 
 // routes
 app.use('/', indexRouter);
