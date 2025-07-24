@@ -42,4 +42,23 @@ app.use(function (err, req, res, next) {
   res.render('error'); // if using EJS
 });
 
+
+// const crypto = require('crypto');
+
+// // Function to generate 64-character API key (32 bytes)
+// const generateApiKey = () => {
+//   return crypto.randomBytes(32).toString('hex');
+// };
+
+// // Generate admin and app keys
+// const adminApiKey = generateApiKey();
+// const appApiKey = generateApiKey();
+// const jwtSecretKey = generateApiKey();
+
+// // Output
+// console.log('✅ Generated Keys:');
+// console.log('ADMIN_API_KEY =', adminApiKey);
+// console.log('APP_API_KEY   =', appApiKey);
+// console.log('JWT_SECRET_KEY   =', jwtSecretKey);
+
 module.exports = app;
