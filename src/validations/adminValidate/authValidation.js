@@ -1,8 +1,8 @@
 const { body, validationResult } = require("express-validator");
-const constants = require("../constants/contants");
-const { handelValidation } = require("../utils/helper");
+const constants = require("../../constants/constants");
+const { handelValidation } = require("../../utils/helper");
 
-const validateLogin = [
+const validateAdminLogin = [
 
   body("email")
     .notEmpty()
@@ -17,5 +17,5 @@ const validateLogin = [
 ];
 
 module.exports = {
-  validateLogin,
+  validateAdminLogin,
 };

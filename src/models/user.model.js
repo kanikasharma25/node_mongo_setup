@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema(
     otp: { type: String, default: '' },
     isOtpVerified: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
-    deviceToken: { type: String, default: '' }
+    deviceToken: { type: String, default: '' },
+    tokenChecker: { type: String, default: ''},
   },
   {
     timestamps: true,

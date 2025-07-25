@@ -11,7 +11,10 @@ const HTTP_STATUS = {
 
 // Common Messages
 const MESSAGES = {
+    INPUT_VALIDATE_FAIL: "Validation failed",
+    INVALID_CREDENTIALS: "Invalid credentials",
     LOGIN_DONE: "Login done",
+    SERVER_ERROR: "Something went wrong on server"
 };
 
 // Roles
