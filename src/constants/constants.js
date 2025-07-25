@@ -11,7 +11,7 @@ const HTTP_STATUS = {
 
 // Common Messages
 const MESSAGES = {
-    LOGIN_DONE: "Login done"
+    LOGIN_DONE: "Login done",
 };
 
 // Roles
