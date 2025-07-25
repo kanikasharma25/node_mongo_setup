@@ -19,6 +19,10 @@ const MESSAGES = {
     PROFILE_LOADED: "Profile loaded",
     ADMIN_API_KEY_MISSING: 'Invalid or missing admin API key',
     APP_API_KEY_MISSING: 'Invalid or missing app API key',
+    AUTH_TOKEN_REQUIRED: "Bearer token is required in header authorization key",
+    AUTH_TOKEN_INVALID: "Invalid token",
+    AUTH_TOKEN_EXPIRED: "Expired token",
+
 };
 
 // Roles

@@ -33,7 +33,7 @@ class AuthAdminService {
         user.tokenChecker = rndm   
         const savedUser = await user.save();
 
-        const payload = { _id: savedUser._id, email: savedUser.email, tokenTracker: savedUser.tokenTracker };
+        const payload = { _id: savedUser._id, email: savedUser.email, tokenChecker: savedUser.tokenChecker };
         const token = await jwtTokenGenerate(payload)
 
         let userData = {
@@ -51,7 +51,7 @@ class AuthAdminService {
     }
 
     async adminProfile(adminId) {
-      let adminDetail = await User.findOne({_id: adminId})
+      let adminDetail = await User.findOne({_id: adminId}).select('_id firstName lastName email role')
       if(!adminDetail) {
         return {
             success: false,
@@ -65,17 +65,6 @@ class AuthAdminService {
         statusCode: HTTP_STATUS.OK,
         data: adminDetail
     }
-    }
-
-
-
-    // Verify JWT Token
-    verifyToken(token) {
-        try {
-            return jwt.verify(token, process.env.JWT_SECRET);
-        } catch (err) {
-            throw new Error('Invalid or expired token.');
-        }
     }
 
     // Reset Password

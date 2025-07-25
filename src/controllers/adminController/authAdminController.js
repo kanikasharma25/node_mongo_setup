@@ -18,6 +18,19 @@ class AuthAdminController {
         }
     }
 
+    async adminProfile(req, res) {
+        try {
+            const adminId = req.user._id;
+            const { success, statusCode, msg, data} = await adminAuthService.adminProfile(adminId);
+            if(!success) {
+                return response.badRequest(res, msg, statusCode)
+            }
+            return response.success(res, msg, data, statusCode)
+        } catch (error) {
+            return response.serverError(res, MESSAGES.SERVER_ERROR, error.message, HTTP_STATUS.SERVER_ERROR )
+        }
+    }
+
     async updateProfile(req, res) {
         try {
             const updatedUser = await userService.updateUserProfile(req.user.id, req.body);
