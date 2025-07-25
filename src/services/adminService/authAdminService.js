@@ -50,6 +50,25 @@ class AuthAdminService {
         
     }
 
+    async adminProfile(adminId) {
+      let adminDetail = await User.findOne({_id: adminId})
+      if(!adminDetail) {
+        return {
+            success: false,
+            msg: MESSAGES.NOT_FOUND,
+            statusCode: HTTP_STATUS.BAD_REQUEST 
+        }
+      }
+      return {
+        success: true,
+        msg: MESSAGES.PROFILE_LOADED,
+        statusCode: HTTP_STATUS.OK,
+        data: adminDetail
+    }
+    }
+
+
+
     // Verify JWT Token
     verifyToken(token) {
         try {

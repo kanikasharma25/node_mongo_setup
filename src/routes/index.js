@@ -3,12 +3,12 @@ const express = require('express');
 const router = express.Router();
 
 const adminRoute = require('./authAdminRoute');
+const { apiKeyValidator } = require('../middlewares/middlewares');
 
-router.use('/admin', adminRoute);
+router.use('/admin', apiKeyValidator , adminRoute);
 
 
 router.get('/', (req, res) => {
-    console.log("testing testing testing testing testing")
     res.send("API is working 👌");
 });
 

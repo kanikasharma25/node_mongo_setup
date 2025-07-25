@@ -14,7 +14,11 @@ const MESSAGES = {
     INPUT_VALIDATE_FAIL: "Validation failed",
     INVALID_CREDENTIALS: "Invalid credentials",
     LOGIN_DONE: "Login done",
-    SERVER_ERROR: "Something went wrong on server"
+    SERVER_ERROR: "Something went wrong on server",
+    NOT_FOUND: "Not Found",
+    PROFILE_LOADED: "Profile loaded",
+    ADMIN_API_KEY_MISSING: 'Invalid or missing admin API key',
+    APP_API_KEY_MISSING: 'Invalid or missing app API key',
 };
 
 // Roles
