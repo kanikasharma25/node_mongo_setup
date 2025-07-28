@@ -22,7 +22,7 @@ const fileFilter = (req, file, cb) => {
   ) {
     cb(null, true);
   } else {
-    const err = new Error(MESSAGES.JPG_PNG_ALLOW);
+    const err = new Error(MESSAGES.JPG_PNG_ALLOW_ONLY);
     err.code = "LIMIT_FILE_TYPE";
     cb(err, false); // Reject the file
   }

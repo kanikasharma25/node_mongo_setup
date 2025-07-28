@@ -16,6 +16,19 @@ const validateAdminLogin = [
 
 ];
 
+const validateAdminchangePassword = [
+
+  body("oldPassword")
+    .notEmpty()
+    .withMessage(constants.MESSAGES.OLD_PASSWORD_REQUIRED),
+
+  body("newPassword").notEmpty().withMessage(constants.MESSAGES.NEW_PASSWORD_REQUIRED),
+
+  handelValidation
+
+];
+
 module.exports = {
   validateAdminLogin,
+  validateAdminchangePassword
 };

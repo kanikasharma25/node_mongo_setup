@@ -43,6 +43,7 @@ app.use((req, res, next) => {
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.error('Server Error:', err.message);
+  console.error('err:', err);
   serverError( res, MESSAGES.SERVER_ERROR, err.message)
 });
 

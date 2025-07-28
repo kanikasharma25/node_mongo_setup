@@ -17,7 +17,6 @@ class AuthAdminService {
             return {
                 success: false,
                 statusCode: HTTP_STATUS.BAD_REQUEST,
-                data: {},
                 msg: MESSAGES.INVALID_CREDENTIALS
             }
         }
@@ -27,7 +26,6 @@ class AuthAdminService {
             return {
                 success: false,
                 statusCode: HTTP_STATUS.BAD_REQUEST,
-                data: {},
                 msg: MESSAGES.INVALID_CREDENTIALS
             }
         }
@@ -93,6 +91,7 @@ class AuthAdminService {
                 }
             }
         )
+
         let user = await User.findById(adminId).select('_id firstName lastName email profileImage')
 
         if (updateCount.modifiedCount > 0) {
@@ -107,9 +106,39 @@ class AuthAdminService {
                 success: false,
                 statusCode: HTTP_STATUS.BAD_REQUEST,
                 msg: MESSAGES.PROFILE_UPDATE_FAIL,
-                data: {}
             }
         }
+
+    }
+
+    async changePassword(adminId, data) {
+        let admin = await User.findById(adminId)
+
+        let isMatched = bcrypt.compareSync(data.oldPassword, admin.password)
+       
+        if (!isMatched) {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.WRONG_OLD_PASSWORD,
+            }
+        }
+        let cryptedPass = bcrypt.hashSync(data.newPassword, 10)
+        let adminUpdate = await User.updateOne(
+            {_id: adminId},
+            {
+                $set: {
+                    password: cryptedPass
+                }
+            }
+        )
+
+            return {
+                success: true,
+                statusCode: HTTP_STATUS.OK,
+                msg: MESSAGES.PASSWORD_UPDATED,
+                data: {}
+            }
 
     }
 
