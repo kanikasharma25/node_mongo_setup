@@ -4,6 +4,7 @@ const User = require('../../models/user.model');
 const bcrypt = require('bcrypt');
 const { MESSAGES, HTTP_STATUS } = require('../../constants/constants');
 const { jwtTokenGenerate } = require('../../utils/helper')
+const multer = require('multer')
 
 class AuthAdminService {
 
@@ -68,9 +69,7 @@ class AuthAdminService {
     }
 
     async updateProfile(adminId, data){
-       console.log("Am going to update admin profile");
-       console.log(adminId, "adminId adminId adminId adminId adminId") 
-       console.log(data, "data data data data data") 
+        
     }
 
 
