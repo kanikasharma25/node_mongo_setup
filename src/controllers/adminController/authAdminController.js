@@ -33,12 +33,19 @@ class AuthAdminController {
 
     async updateProfile(req, res) {
         try {
-            const updatedUser = await userService.updateUserProfile(req.user.id, req.body);
-            res.status(200).json({ message: 'Profile updated successfully', data: updatedUser });
+            
+            let resp = await adminAuthService.updateProfile(req.user.id, req.body)
+            console.log("reached to controller agian")
+            return
+
         } catch (error) {
-            res.status(400).json({ message: error.message });
+            console.log(error, " =-=-=-=-=-=-= ERROR =-=-=-=-=-= ")
+            return response.serverError(res, MESSAGES.SERVER_ERROR, error.message, HTTP_STATUS.SERVER_ERROR )
         }
     }
+
+
+
 }
 
 module.exports = new AuthAdminController();

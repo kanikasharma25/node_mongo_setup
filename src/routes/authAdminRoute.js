@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post('/login', validateAdminLogin, authAdminController.login);
 router.get('/adminProfile', verifyToken, authAdminController.adminProfile);
+router.get('/updateProfile', verifyToken, authAdminController.updateProfile);
 
 module.exports = router;

@@ -67,19 +67,14 @@ class AuthAdminService {
     }
     }
 
-    // Reset Password
-    async resetPassword(userId, newPassword) {
-        const user = await User.findById(userId);
-        if (!user) {
-            throw new Error('User not found.');
-        }
-
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        user.password = hashedPassword;
-        await user.save();
-
-        return { message: 'Password updated successfully.' };
+    async updateProfile(adminId, data){
+       console.log("Am going to update admin profile");
+       console.log(adminId, "adminId adminId adminId adminId adminId") 
+       console.log(data, "data data data data data") 
     }
+
+
+
 }
 
 module.exports = new AuthAdminService();
