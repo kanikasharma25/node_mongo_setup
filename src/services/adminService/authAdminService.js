@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 const { MESSAGES, HTTP_STATUS, ROLES } = require('../../constants/constants');
 const { jwtTokenGenerate } = require('../../utils/helper')
 const multer = require('multer')
+const fs = require('fs');
+const path = require('path');
 
 class AuthAdminService {
 
@@ -72,6 +74,16 @@ class AuthAdminService {
         let updateData = data
         if (files && files.path) {
             updateData.profileImage = files.path
+            let u = await User.findById(adminId).select('profileImage')
+            if (u && u.profileImage) {
+                console.log(' =-=-=-=-=-=-=-=-     Need to delete old image path     =-=-=-=-=-=-=-==-=-= ');
+                const oldImagePath = path.join(__dirname, '../../../', u.profileImage);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                    console.log('Old profile image deleted:', oldImagePath);
+                }
+            }
+
         }
         let updateCount = await User.updateOne(
             { _id: adminId },
