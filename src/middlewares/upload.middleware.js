@@ -5,7 +5,7 @@ const response = require("../utils/response");
 const { MESSAGES } = require("../constants/constants");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "src/uploads/");
+    cb(null, "src/uploads/profile");
   },
   filename: (req, file, cb) => {
     const uniqueName =
@@ -24,7 +24,7 @@ const fileFilter = (req, file, cb) => {
   } else {
     const err = new Error(MESSAGES.JPG_PNG_ALLOW);
     err.code = "LIMIT_FILE_TYPE";
-    cb(err, false); // ❌ Reject the file
+    cb(err, false); // Reject the file
   }
 };
 

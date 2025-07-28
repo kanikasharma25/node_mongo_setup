@@ -4,7 +4,7 @@ const User = require('../models/user.model');
 const { ROLES } = require('../constants/constants');
 
 const adminSeed = async (email, password) => {
-    const exists = await User.findOne({email})
+    const exists = await User.findOne({role: 'admin'})
     if(exists){
         console.log("Admin exists")
     } else {
@@ -19,4 +19,4 @@ const adminSeed = async (email, password) => {
     }
 };
 
-adminSeed('admin@gmail.com', '123456');
+adminSeed('admin@gmail.com', '123456', );

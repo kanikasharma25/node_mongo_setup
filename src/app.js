@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Serve static files
-app.use('/uploads', express.static(path.join(__dirname, 'src/uploads'))); // to serve profile/post images
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // to serve profile/post images
 app.use(express.static(path.join(__dirname, 'public')));
 
 // EJS view engine setup (if needed)

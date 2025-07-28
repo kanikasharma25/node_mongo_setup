@@ -33,10 +33,14 @@ class AuthAdminController {
 
     async updateProfile(req, res) {
         try {
-
-            let { data, msg, status, successCode } = await adminAuthService.updateProfile(req.user.id, req.body)
-            console.log("reached to controller agian")
-            return
+            
+            let filesPath = req.file
+            let adminId = req.user.id
+            let { data, msg, success, statusCode } = await adminAuthService.updateProfile(filesPath, adminId, req.body)
+            if(!success) {
+                response.badRequest(res, msg, statusCode)
+            }
+            response.success(res, msg, data, statusCode)
 
         } catch (error) {
             console.log(error, " =-=-=-=-=-=-= ERROR =-=-=-=-=-= ")

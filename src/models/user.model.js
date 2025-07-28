@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 const {ROLES} = require('../constants/constants.js');
 
@@ -7,12 +8,13 @@ const userSchema = new mongoose.Schema(
     lastName: { type: String, default: '' },
     email: { type: String, default: ''},
     password: { type: String, default: '' },
-    role: { type: String, enum: [ROLES.ADMIN, ROLES.USER], default: ROLES.USER },
+    role: { type: String, enum: [ROLES.ADMIN, ROLES.SALES_REP], default: ROLES.SALES_REP },
     otp: { type: String, default: '' },
     isOtpVerified: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
     deviceToken: { type: String, default: '' },
     tokenChecker: { type: String, default: ''},
+    profileImage: { type: String, default: ''},
   },
   {
     timestamps: true,

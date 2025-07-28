@@ -11,6 +11,11 @@ const HTTP_STATUS = {
 
 // Common Messages
 const MESSAGES = {
+
+    // profile
+    PROFILE_UPDATE_PASS: "Profile updated successfully", 
+    PROFILE_UPDATE_FAIL: "Profile updation successfully", 
+
     JPG_PNG_ALLOW: "Invalid file type. Only JPEG and PNG allowed.",
     INPUT_VALIDATE_FAIL: "Validation failed",
     INVALID_CREDENTIALS: "Invalid credentials",
@@ -29,7 +34,7 @@ const MESSAGES = {
 // Roles
 const ROLES = {
     ADMIN: "admin",
-    USER: "user",
+    SALES_REP: "sales rep",
 };
 
 
