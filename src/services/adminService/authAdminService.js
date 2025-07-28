@@ -142,6 +142,26 @@ class AuthAdminService {
 
     }
 
+    async logOut(adminId, data) {
+        
+        let adminUpdate = await User.updateOne(
+            {_id: adminId},
+            {
+                $set: {
+                    tokenChecker: ""
+                }
+            }
+        )
+
+            return {
+                success: true,
+                statusCode: HTTP_STATUS.OK,
+                msg: MESSAGES.LOGOUT_DONE,
+                data: {}
+            }
+
+    }
+
 }
 
 module.exports = new AuthAdminService();

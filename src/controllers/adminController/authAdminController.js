@@ -66,6 +66,24 @@ class AuthAdminController {
         }
     }
 
+    async logOut(req, res) {
+        try {
+
+            let adminId = req.user.id
+            
+            let { data, msg, success, statusCode } = await adminAuthService.logOut( adminId )
+
+            if(!success) {
+                response.badRequest(res, msg, statusCode)
+            }
+            response.success(res, msg, data, statusCode)
+
+        } catch (error) {
+            console.log(error, " =-=-=-=-=-=-= ERROR =-=-=-=-=-= ")
+            return response.serverError(res, MESSAGES.SERVER_ERROR, error.message, HTTP_STATUS.SERVER_ERROR)
+        }
+    }
+
 }
 
 module.exports = new AuthAdminController();

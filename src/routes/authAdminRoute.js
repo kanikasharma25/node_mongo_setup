@@ -15,4 +15,5 @@ router.get('/adminProfile', authAdminController.adminProfile);
 // upload.array('images', 5)
 router.put('/updateProfile', upload.single('profileImage'), authAdminController.updateProfile);
 router.patch('/changePassword', validateAdminchangePassword, authAdminController.changePassword);
+router.get('/logOut', authAdminController.logOut);
 module.exports = router;
