@@ -11,6 +11,7 @@ const HTTP_STATUS = {
 
 // Common Messages
 const MESSAGES = {
+    JPG_PNG_ALLOW: "Invalid file type. Only JPEG and PNG allowed.",
     INPUT_VALIDATE_FAIL: "Validation failed",
     INVALID_CREDENTIALS: "Invalid credentials",
     LOGIN_DONE: "Login done",

@@ -1,14 +1,15 @@
 
 const multer = require("multer");
 const path = require("path");
-
+const response = require("../utils/response");
+const { MESSAGES } = require("../constants/constants");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "src/uploads/");
   },
   filename: (req, file, cb) => {
     const uniqueName =
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname);
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname);  
     cb(null, uniqueName );
   },
 });
@@ -21,7 +22,9 @@ const fileFilter = (req, file, cb) => {
   ) {
     cb(null, true);
   } else {
-    cb(new Error("Unsupported file type"), false);
+    const err = new Error(MESSAGES.JPG_PNG_ALLOW);
+    err.code = "LIMIT_FILE_TYPE";
+    cb(err, false); // ❌ Reject the file
   }
 };
 
