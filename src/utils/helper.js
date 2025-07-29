@@ -6,6 +6,8 @@ const { body, validationResult } = require("express-validator");
 const response = require('../utils/response')
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt')
+const crypto = require('crypto');
+
 
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -44,6 +46,12 @@ module.exports = {
             return response.badRequest(res, MESSAGES.INPUT_VALIDATE_FAIL, HTTP_STATUS.BAD_REQUEST, errors.array())
         }
         next();
+    },
+
+    generateSecureOtp: () => {
+        const buffer = crypto.randomBytes(3);
+        const otp = parseInt(buffer.toString('hex'), 16) % 900000 + 100000;
+        return otp.toString();
     },
 
 

@@ -1,10 +1,7 @@
 
 const User = require('../../models/user.model');
 const { MESSAGES, HTTP_STATUS, ROLES } = require('../../constants/constants');
-const { jwtTokenGenerate, transporter, hashedPassword, comparePassword } = require('../../utils/helper')
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+const { jwtTokenGenerate, transporter, hashedPassword, comparePassword, generateSecureOtp } = require('../../utils/helper')
 
 class AuthAdminService {
 
@@ -38,8 +35,12 @@ class AuthAdminService {
             }
     
             let rndm = Math.random().toString();
+            let otp = generateSecureOtp()
             user.tokenChecker = rndm
             user.deviceToken = deviceToken
+            user.otp = otp
+            user.isOtpVerified = false
+
             const savedUser = await user.save();
     
             // const payload = { _id: savedUser._id, email: savedUser.email, tokenChecker: savedUser.tokenChecker };
@@ -49,6 +50,19 @@ class AuthAdminService {
             //     ...savedUser.toObject(),
             //     token
             // }
+
+            const mailOptions = {
+                from: `"Admin Support" <${process.env.SMTP_USER}>`,
+                to: user.email,
+                subject: "Verification code for login",
+                html: `
+          <h3>Verification code for login - RPRT</h3>
+          <p>OTP: ${otp}</p>
+        `,
+            };
+    
+            await transporter.sendMail(mailOptions);
+           
     
             return {
                 success: true,
