@@ -1,7 +1,7 @@
 
-const bcrypt = require('bcrypt')
 const User = require('../models/user.model');
 const { ROLES } = require('../constants/constants');
+const { hashedPassword } = require('../utils/helper');
 
 const adminSeed = async (email, password) => {
     const exists = await User.findOne({role: 'admin'})
@@ -12,7 +12,7 @@ const adminSeed = async (email, password) => {
             firstName: 'Admin',
             lastName: 'admin',
             email: email,
-            password: bcrypt.hashSync(password,10),
+            password: await hashedPassword(password),
             role: ROLES.ADMIN
         })
         console.log("Admin created")

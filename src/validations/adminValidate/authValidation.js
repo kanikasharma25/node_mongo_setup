@@ -40,8 +40,22 @@ const forgetPasswordValidate = [
 
 ];
 
+const resetPasswordValidate = [
+
+  body("resetToken")
+    .notEmpty()
+    .withMessage(constants.MESSAGES.RESET_TOKEN_REQUIRED),
+  body("newPassword")
+    .notEmpty()
+    .withMessage(constants.MESSAGES.NEW_PASSWORD_REQUIRED),
+
+  handelValidation
+
+];
+
 module.exports = {
   validateAdminLogin,
   validateAdminchangePassword,
-  forgetPasswordValidate
+  forgetPasswordValidate,
+  resetPasswordValidate
 };

@@ -17,6 +17,9 @@ const MESSAGES = {
 
     // reset password
     RESET_PASSWORD_EMAIL_DELIVERED: 'Reset password link has been sent to your email successfully',
+    RESET_TOKEN_REQUIRED: "Reset token is required",
+    RESET_PASSWORD_SUCCESS: "Reset password successfully, Now login with new password",
+    RESET_TOKEN_EXPIRED: "Reset token has expired. Please request a new one.",
 
     // profile
     PROFILE_UPDATE_PASS: "Profile updated successfully",

@@ -1,13 +1,11 @@
 
-const jwt = require('jsonwebtoken');
 const User = require('../../models/user.model');
 const bcrypt = require('bcrypt');
 const { MESSAGES, HTTP_STATUS, ROLES } = require('../../constants/constants');
-const { jwtTokenGenerate } = require('../../utils/helper')
-const multer = require('multer')
+const { jwtTokenGenerate, transporter, hashedPassword, comparePassword } = require('../../utils/helper')
 const fs = require('fs');
 const path = require('path');
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
 class AuthAdminService {
@@ -23,7 +21,7 @@ class AuthAdminService {
             }
         }
 
-        const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+        const isPasswordCorrect = await comparePassword(password, user.password);
         if (!isPasswordCorrect) {
             return {
                 success: false,
@@ -116,7 +114,7 @@ class AuthAdminService {
     async changePassword(adminId, data) {
         let admin = await User.findById(adminId)
 
-        let isMatched = bcrypt.compareSync(data.oldPassword, admin.password)
+        let isMatched = await comparePassword(data.oldPassword, admin.password)
 
         if (!isMatched) {
             return {
@@ -125,7 +123,7 @@ class AuthAdminService {
                 msg: MESSAGES.WRONG_OLD_PASSWORD,
             }
         }
-        let cryptedPass = bcrypt.hashSync(data.newPassword, 10)
+        let cryptedPass = await hashedPassword(data.newPassword)
         let adminUpdate = await User.updateOne(
             { _id: adminId },
             {
@@ -185,19 +183,7 @@ class AuthAdminService {
         exists.resetTokenExpires = expireTime;
         await exists.save();
 
-
-        const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: process.env.SMTP_PORT,
-            secure: false, // true for 465, false for 587
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
-            },
-        });
-
         const resetLink = `baseURL/admin/reset-password?token=${token}`;
-
 
         const mailOptions = {
             from: `"Admin Support" <${process.env.SMTP_USER}>`,
@@ -220,6 +206,41 @@ class AuthAdminService {
             statusCode: HTTP_STATUS.OK,
             msg: MESSAGES.RESET_PASSWORD_EMAIL_DELIVERED,
             data: data
+        }
+
+    }
+
+    async resetPassword(body) {
+
+        let exists = await User.findOne({ resetToken: body.resetToken })
+
+        if (!exists) {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.NOT_FOUND,
+            }
+        }
+
+        if (exists.resetTokenExpires && exists.resetTokenExpires < Date.now()) {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.UNAUTHORIZED,
+                msg: MESSAGES.RESET_TOKEN_EXPIRED,
+            };
+        }
+
+        let hiddenPass = await hashedPassword(body.newPassword)
+        exists.password = hiddenPass
+        exists.resetToken = null;
+        exists.resetTokenExpires = null;
+        await exists.save()
+
+        return {
+            success: true,
+            statusCode: HTTP_STATUS.OK,
+            msg: MESSAGES.RESET_PASSWORD_SUCCESS,
+            data: {}
         }
 
     }

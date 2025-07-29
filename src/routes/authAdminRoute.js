@@ -1,7 +1,7 @@
 
 const express = require('express');
 const authAdminController = require('../controllers/adminController/authAdminController');
-const { validateAdminLogin, validateAdminchangePassword, forgetPasswordValidate } = require('../validations/adminValidate/authValidation');
+const { validateAdminLogin, validateAdminchangePassword, forgetPasswordValidate, resetPasswordValidate } = require('../validations/adminValidate/authValidation');
 const { verifyToken } = require('../middlewares/middlewares');
 const router = express.Router();
 const upload = require('../middlewares/upload.middleware');
@@ -17,4 +17,5 @@ router.put('/updateProfile', upload.single('profileImage'), authAdminController.
 router.patch('/changePassword', validateAdminchangePassword, authAdminController.changePassword);
 router.get('/logOut', authAdminController.logOut);
 router.post('/forgetPassword', forgetPasswordValidate, authAdminController.forgetPassword);
+router.post('/resetPassword', resetPasswordValidate, authAdminController.resetPassword);
 module.exports = router;
