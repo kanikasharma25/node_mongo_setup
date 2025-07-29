@@ -15,6 +15,9 @@ const HTTP_STATUS = {
 // Common Messages
 const MESSAGES = {
 
+    // reset password
+    RESET_PASSWORD_EMAIL_DELIVERED: 'Reset password link has been sent to your email successfully',
+
     // profile
     PROFILE_UPDATE_PASS: "Profile updated successfully",
     PROFILE_UPDATE_FAIL: "Profile updation failed",
@@ -25,6 +28,11 @@ const MESSAGES = {
     NEW_PASSWORD_REQUIRED: "Required new password",
     WRONG_OLD_PASSWORD: "Wrong old password",
     PASSWORD_UPDATED: "Password updated successfully",
+    PASSWORD_REQUIRED: "Password is required",
+
+    // email
+    EMAIL_REQUIRED: "Email is required",
+    EMAIL_INVALID: "Invalid email",
 
     // image
     JPG_PNG_ALLOW_ONLY: "Invalid file type. Only JPEG and PNG allowed.",

@@ -7,6 +7,8 @@ const { jwtTokenGenerate } = require('../../utils/helper')
 const multer = require('multer')
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 class AuthAdminService {
 
@@ -115,7 +117,7 @@ class AuthAdminService {
         let admin = await User.findById(adminId)
 
         let isMatched = bcrypt.compareSync(data.oldPassword, admin.password)
-       
+
         if (!isMatched) {
             return {
                 success: false,
@@ -125,7 +127,7 @@ class AuthAdminService {
         }
         let cryptedPass = bcrypt.hashSync(data.newPassword, 10)
         let adminUpdate = await User.updateOne(
-            {_id: adminId},
+            { _id: adminId },
             {
                 $set: {
                     password: cryptedPass
@@ -133,19 +135,19 @@ class AuthAdminService {
             }
         )
 
-            return {
-                success: true,
-                statusCode: HTTP_STATUS.OK,
-                msg: MESSAGES.PASSWORD_UPDATED,
-                data: {}
-            }
+        return {
+            success: true,
+            statusCode: HTTP_STATUS.OK,
+            msg: MESSAGES.PASSWORD_UPDATED,
+            data: {}
+        }
 
     }
 
     async logOut(adminId, data) {
-        
+
         let adminUpdate = await User.updateOne(
-            {_id: adminId},
+            { _id: adminId },
             {
                 $set: {
                     tokenChecker: ""
@@ -153,12 +155,72 @@ class AuthAdminService {
             }
         )
 
+        return {
+            success: true,
+            statusCode: HTTP_STATUS.OK,
+            msg: MESSAGES.LOGOUT_DONE,
+            data: {}
+        }
+
+    }
+
+    async forgetPassword(email) {
+
+        let exists = await User.findOne({ email: email, role: ROLES.ADMIN })
+
+        if (!exists) {
             return {
-                success: true,
-                statusCode: HTTP_STATUS.OK,
-                msg: MESSAGES.LOGOUT_DONE,
-                data: {}
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.NOT_FOUND,
             }
+        }
+
+
+        const token = crypto.randomBytes(32).toString("hex");
+        const expireTime = Date.now() + 1000 * 60 * 15;
+
+
+        exists.resetToken = token;
+        exists.resetTokenExpires = expireTime;
+        await exists.save();
+
+
+        const transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: process.env.SMTP_PORT,
+            secure: false, // true for 465, false for 587
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
+            },
+        });
+
+        const resetLink = `baseURL/admin/reset-password?token=${token}`;
+
+
+        const mailOptions = {
+            from: `"Admin Support" <${process.env.SMTP_USER}>`,
+            to: exists.email,
+            subject: "Password Reset Link",
+            html: `
+      <h3>Password Reset Requested</h3>
+      <p>Click below to reset your password:</p>
+      <a href="${resetLink}">${resetLink}</a>
+      <p>This link will expire in 15 minutes.</p>
+    `,
+        };
+
+        await transporter.sendMail(mailOptions);
+        let data = {
+            token: token
+        }
+        return {
+            success: true,
+            statusCode: HTTP_STATUS.OK,
+            msg: MESSAGES.RESET_PASSWORD_EMAIL_DELIVERED,
+            data: data
+        }
 
     }
 

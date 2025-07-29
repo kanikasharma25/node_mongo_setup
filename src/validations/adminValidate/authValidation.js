@@ -6,11 +6,11 @@ const validateAdminLogin = [
 
   body("email")
     .notEmpty()
-    .withMessage(constants.MESSAGES.INPUT_EMAIL_REQ)
+    .withMessage(constants.MESSAGES.EMAIL_REQUIRED)
     .isEmail()
-    .withMessage(constants.MESSAGES.INPUT_EMAIL_INVALID),
+    .withMessage(constants.MESSAGES.EMAIL_INVALID),
 
-  body("password").notEmpty().withMessage(constants.MESSAGES.INPUT_PASS_REQ),
+  body("password").notEmpty().withMessage(constants.MESSAGES.PASSWORD_REQUIRED),
 
   handelValidation
 
@@ -28,7 +28,20 @@ const validateAdminchangePassword = [
 
 ];
 
+const forgetPasswordValidate = [
+
+  body("email")
+    .notEmpty()
+    .withMessage(constants.MESSAGES.EMAIL_REQUIRED)
+    .isEmail()
+    .withMessage(constants.MESSAGES.EMAIL_INVALID),
+
+  handelValidation
+
+];
+
 module.exports = {
   validateAdminLogin,
-  validateAdminchangePassword
+  validateAdminchangePassword,
+  forgetPasswordValidate
 };

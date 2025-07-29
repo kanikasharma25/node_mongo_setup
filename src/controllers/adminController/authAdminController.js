@@ -84,6 +84,22 @@ class AuthAdminController {
         }
     }
 
+    async forgetPassword(req, res) {
+        try {
+            let email= req.body.email
+            
+            let { data, msg, success, statusCode } = await adminAuthService.forgetPassword( email )
+
+            if(!success) {
+                response.badRequest(res, msg, statusCode)
+            }
+            response.success(res, msg, data, statusCode)
+        } catch (error) {
+            console.log(error,"error=-=-=-=-=-=-")
+            return response.serverError(res, MESSAGES.SERVER_ERROR, error.message)
+        }
+    }
+
 }
 
 module.exports = new AuthAdminController();
