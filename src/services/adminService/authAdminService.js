@@ -1,11 +1,9 @@
 
 const User = require('../../models/user.model');
-const bcrypt = require('bcrypt');
 const { MESSAGES, HTTP_STATUS, ROLES } = require('../../constants/constants');
 const { jwtTokenGenerate, transporter, hashedPassword, comparePassword } = require('../../utils/helper')
 const fs = require('fs');
 const path = require('path');
-// const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
 class AuthAdminService {
@@ -33,7 +31,6 @@ class AuthAdminService {
 
         let rndm = Math.random().toString();
         user.tokenChecker = rndm
-        user.deviceToken = deviceToken
         const savedUser = await user.save();
 
         const payload = { _id: savedUser._id, email: savedUser.email, tokenChecker: savedUser.tokenChecker };

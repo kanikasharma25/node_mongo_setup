@@ -15,6 +15,9 @@ const HTTP_STATUS = {
 // Common Messages
 const MESSAGES = {
 
+    // otp
+    OTP_ON_EMAIL: "Otp has been sent on your email",
+
     // api input
     FIRSTNAME_REQ: "First name is required",
     LASTNAME_REQ: "Last name is required",
@@ -37,6 +40,7 @@ const MESSAGES = {
     PROFILE_LOADED: "Profile loaded",
 
     // password
+    CREATE_PASSWORD: "You need to create a password for this account as it’s a new account.",
     OLD_PASSWORD_REQUIRED: "Required old password",
     NEW_PASSWORD_REQUIRED: "Required new password",
     WRONG_OLD_PASSWORD: "Wrong old password",
