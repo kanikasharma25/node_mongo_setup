@@ -23,8 +23,11 @@ const createUserValidate = [
     body("email")
         .notEmpty()
         .withMessage(constants.MESSAGES.EMAIL_REQUIRED)
+        .trim()
+        .normalizeEmail() // lowercase and clean up
         .isEmail()
         .withMessage(constants.MESSAGES.EMAIL_INVALID),
+
 
     handelValidation
 

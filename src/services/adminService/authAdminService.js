@@ -54,7 +54,9 @@ class AuthAdminService {
     }
 
     async adminProfile(adminId) {
+        
         let adminDetail = await User.findOne({ _id: adminId }).select('_id firstName lastName email role')
+
         if (!adminDetail) {
             return {
                 success: false,
@@ -62,12 +64,14 @@ class AuthAdminService {
                 statusCode: HTTP_STATUS.BAD_REQUEST
             }
         }
+
         return {
             success: true,
             msg: MESSAGES.PROFILE_LOADED,
             statusCode: HTTP_STATUS.OK,
             data: adminDetail
         }
+
     }
 
     async updateProfile(files, adminId, data) {

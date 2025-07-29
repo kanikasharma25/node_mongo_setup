@@ -20,8 +20,6 @@ class UserService {
             ...body
         })
 
-        
-
         return {
             success: true,
             statusCode: HTTP_STATUS.CREATED,
