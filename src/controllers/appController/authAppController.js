@@ -8,6 +8,20 @@ class UserController {
     async login(req, res) {
         try {
             const { success, statusCode, msg, data } = await authAppService.loginUser(req.body);
+            console.log(data,"ppopopopopopopopopopol")
+            if (!success) {
+                return response.badRequest(res, msg, statusCode)
+            }
+            return response.success(res, msg, data, statusCode)
+        } catch (error) {
+            return response.serverError(res, MESSAGES.SERVER_ERROR, error.message, HTTP_STATUS.SERVER_ERROR)
+        }
+    }
+
+    async verifyOtp(req, res) {
+        try {
+            let userId = req.user.id
+            const { success, statusCode, msg, data } = await authAppService.verifyOtp(req.body, userId);
             if (!success) {
                 return response.badRequest(res, msg, statusCode)
             }

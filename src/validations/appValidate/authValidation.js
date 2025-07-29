@@ -19,6 +19,17 @@ const validateLogin = [
 
 ];
 
+const validateVerifyOtp = [
+
+  body("otp")
+    .notEmpty()
+    .withMessage(constants.MESSAGES.OTP_REQ),
+
+  handelValidation
+
+];
+
 module.exports = {
     validateLogin,
+    validateVerifyOtp
 };

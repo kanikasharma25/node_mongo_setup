@@ -17,6 +17,9 @@ const MESSAGES = {
 
     // otp
     OTP_ON_EMAIL: "Otp has been sent on your email",
+    OTP_REQ: "Otp is required",
+    OTP_VERIFIED_SUCCESS: "Otp verified successfully",
+    OTP_INVALID: "Otp doesn't match",
 
     // api input
     FIRSTNAME_REQ: "First name is required",
