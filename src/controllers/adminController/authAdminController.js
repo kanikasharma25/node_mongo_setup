@@ -7,8 +7,8 @@ class AuthAdminController {
 
     async login(req, res) {
         try {
-            const { email, password } = req.body;
-            const { success, statusCode, msg, data } = await adminAuthService.loginUser(email, password);
+            
+            const { success, statusCode, msg, data } = await adminAuthService.loginUser(req.body);
             if (!success) {
                 return response.badRequest(res, msg, statusCode)
             }

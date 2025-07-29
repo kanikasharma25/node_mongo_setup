@@ -15,6 +15,16 @@ const HTTP_STATUS = {
 // Common Messages
 const MESSAGES = {
 
+    // api input
+    FIRSTNAME_REQ: "First name is required",
+    LASTNAME_REQ: "Last name is required",
+    COUNTRYCODE_REQ: "Country code is required",
+    PHONE_REQ: "Phone number is required",
+    DEVICETOKEN_REQ: "required",
+
+    // user
+    USER_CREATE_SUCCESS: "User created successfully",
+
     // reset password
     RESET_PASSWORD_EMAIL_DELIVERED: 'Reset password link has been sent to your email successfully',
     RESET_TOKEN_REQUIRED: "Reset token is required",
@@ -36,6 +46,7 @@ const MESSAGES = {
     // email
     EMAIL_REQUIRED: "Email is required",
     EMAIL_INVALID: "Invalid email",
+    EMAIL_EXISTS: "Email already exists",
 
     // image
     JPG_PNG_ALLOW_ONLY: "Invalid file type. Only JPEG and PNG allowed.",
@@ -75,5 +86,5 @@ module.exports = {
     HTTP_STATUS,
     MESSAGES,
     ROLES,
-    
+
 };

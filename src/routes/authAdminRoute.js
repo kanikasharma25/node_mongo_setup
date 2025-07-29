@@ -1,12 +1,16 @@
 
 const express = require('express');
-const authAdminController = require('../controllers/adminController/authAdminController');
 const { validateAdminLogin, validateAdminchangePassword, forgetPasswordValidate, resetPasswordValidate } = require('../validations/adminValidate/authValidation');
 const { verifyToken } = require('../middlewares/middlewares');
 const router = express.Router();
 const upload = require('../middlewares/upload.middleware');
+const authAdminController = require('../controllers/adminController/authAdminController');
+const userController = require('../controllers/adminController/userController');
+const { createUserValidate } = require('../validations/adminValidate/userValidation');
 
-
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-    AUTH      =-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 router.post('/login', validateAdminLogin, authAdminController.login);
  
 router.use(verifyToken)
@@ -18,4 +22,11 @@ router.patch('/changePassword', validateAdminchangePassword, authAdminController
 router.get('/logOut', authAdminController.logOut);
 router.post('/forgetPassword', forgetPasswordValidate, authAdminController.forgetPassword);
 router.post('/resetPassword', resetPasswordValidate, authAdminController.resetPassword);
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-    USER      =-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
+router.post('/createUser', createUserValidate, userController.createUser )
+
+
 module.exports = router;

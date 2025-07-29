@@ -20,15 +20,15 @@ const transporter = nodemailer.createTransport({
 module.exports = {
     transporter,
 
-    hashedPassword: async(password)=> {
-      let hashedPassword = bcrypt.hashSync(password, 10)
-      return hashedPassword
+    hashedPassword: async (password) => {
+        let hashedPassword = bcrypt.hashSync(password, 10)
+        return hashedPassword
     },
 
-    comparePassword: async(plainPassword, hashedPassword)=> {
+    comparePassword: async (plainPassword, hashedPassword) => {
         let comparePass = bcrypt.compareSync(plainPassword, hashedPassword);
         return comparePass
-      },
+    },
 
     //jwttoken generate
     jwtTokenGenerate: async (payload = {}, expiresIn) => {
@@ -48,6 +48,6 @@ module.exports = {
 
 
 
-    
+
 
 };

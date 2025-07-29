@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema(
     deviceToken: { type: String, default: '' },
     tokenChecker: { type: String, default: '' },
     profileImage: { type: String, default: '' },
+    countryCode: { type: String, default: ''},
+    phone: {type: String, default: ''},
 
     // for forgetPassword logic
     resetToken: { type: String, default: null },

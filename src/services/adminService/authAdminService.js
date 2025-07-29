@@ -11,7 +11,8 @@ const crypto = require('crypto');
 class AuthAdminService {
 
     // Login user
-    async loginUser(email, password) {
+    async loginUser(body) {
+        let { email, password, deviceToken } = body
         const user = await User.findOne({ email: email, role: ROLES.ADMIN });
         if (!user) {
             return {
@@ -32,6 +33,7 @@ class AuthAdminService {
 
         let rndm = Math.random().toString();
         user.tokenChecker = rndm
+        user.deviceToken = deviceToken
         const savedUser = await user.save();
 
         const payload = { _id: savedUser._id, email: savedUser.email, tokenChecker: savedUser.tokenChecker };
@@ -148,7 +150,8 @@ class AuthAdminService {
             { _id: adminId },
             {
                 $set: {
-                    tokenChecker: ""
+                    tokenChecker: "",
+                    deviceToken: ""
                 }
             }
         )

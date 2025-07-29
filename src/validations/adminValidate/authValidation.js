@@ -1,4 +1,4 @@
-const { body, validationResult } = require("express-validator");
+const { body } = require("express-validator");
 const constants = require("../../constants/constants");
 const { handelValidation } = require("../../utils/helper");
 
@@ -11,6 +11,8 @@ const validateAdminLogin = [
     .withMessage(constants.MESSAGES.EMAIL_INVALID),
 
   body("password").notEmpty().withMessage(constants.MESSAGES.PASSWORD_REQUIRED),
+
+  body("deviceToken").notEmpty().withMessage(constants.MESSAGES.DEVICETOKEN_REQ),
 
   handelValidation
 
