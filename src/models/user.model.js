@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-const { ROLES, GENDER } = require('../constants/constants.js');
+const { ROLES, GENDER, OTP_TYPE } = require('../constants/constants.js');
 
 const userSchema = new mongoose.Schema(
   {
@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, default: '' },
     password: { type: String, default: '' },
     role: { type: String, enum: [ROLES.ADMIN, ROLES.SALES_REP], default: ROLES.SALES_REP },
+    otpType: { type: String, enum: [OTP_TYPE.LOGIN, OTP_TYPE.RESET_PASS], default: OTP_TYPE.LOGIN  }, // for app developer use only
     otp: { type: String, default: '' },
     isOtpVerified: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },

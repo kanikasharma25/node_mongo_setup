@@ -12,7 +12,9 @@ const { createUserValidate } = require('../validations/adminValidate/userValidat
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-    AUTH      =-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 router.post('/login', validateAdminLogin, authAdminController.login);
- 
+router.post('/forgetPassword', forgetPasswordValidate, authAdminController.forgetPassword);
+router.post('/resetPassword', resetPasswordValidate, authAdminController.resetPassword);
+
 router.use(verifyToken)
 router.get('/adminProfile', authAdminController.adminProfile);
 
@@ -20,8 +22,7 @@ router.get('/adminProfile', authAdminController.adminProfile);
 router.put('/updateProfile', upload.single('profileImage'), authAdminController.updateProfile);
 router.patch('/changePassword', validateAdminchangePassword, authAdminController.changePassword);
 router.get('/logOut', authAdminController.logOut);
-router.post('/forgetPassword', forgetPasswordValidate, authAdminController.forgetPassword);
-router.post('/resetPassword', resetPasswordValidate, authAdminController.resetPassword);
+
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-    USER      =-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-

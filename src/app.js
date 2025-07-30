@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const createError = require('http-errors');
+var morgan = require('morgan')
 
 const connectDB = require('./config/db');
 const indexRouter = require('./routes/index');
@@ -19,7 +20,7 @@ require('./config/adminSeed');
 
 // Enable CORS
 app.use(cors());
-
+app.use(morgan('dev'));
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

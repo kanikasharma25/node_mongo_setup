@@ -1,7 +1,8 @@
 
 const User = require('../../models/user.model');
-const { MESSAGES, HTTP_STATUS, ROLES } = require('../../constants/constants');
-const { jwtTokenGenerate, transporter, hashedPassword, comparePassword, generateSecureOtp } = require('../../utils/helper')
+const { MESSAGES, HTTP_STATUS, ROLES, OTP_TYPE } = require('../../constants/constants');
+const { jwtTokenGenerate, transporter, hashedPassword, comparePassword, generateSecureOtp } = require('../../utils/helper');
+const helper = require('../../utils/helper');
 
 class AuthAdminService {
 
@@ -38,6 +39,7 @@ class AuthAdminService {
         let otp = generateSecureOtp()
         user.tokenChecker = rndm
         user.deviceToken = deviceToken
+        user.otpType = OTP_TYPE.LOGIN
         user.otp = otp
         user.isOtpVerified = false
 
@@ -181,6 +183,7 @@ class AuthAdminService {
         let otp = generateSecureOtp()
         exists.tokenChecker = rndm
         exists.otp = otp
+        exists.otpType = OTP_TYPE.RESET_PASS
         exists.isOtpVerified = false
 
         const savedUser = await exists.save();

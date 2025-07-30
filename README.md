@@ -28,3 +28,4 @@ need all the required keys for project
 | cors              | ^2.8.5    | Allow frontend apps (like React) to connect without CORS issues |
 | express-validator | ^7.2.1    | Middleware to validate and sanitize incoming request data (e.g. email, password). |
 | nodemailer        | ^7.0.5    | Used to send emails |                                                               
+| mongan            | ^1.10.1   | used to get api proper log while development |

@@ -95,12 +95,17 @@ const GENDER = {
 
 };
 
+const OTP_TYPE = {
+    LOGIN: "login",
+    RESET_PASS: "reset_pass"
+}
+
 // Export all constants
 module.exports = {
 
     HTTP_STATUS,
     MESSAGES,
     ROLES,
-    GENDER
-
+    GENDER,
+    OTP_TYPE
 };
