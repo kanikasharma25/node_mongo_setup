@@ -34,9 +34,9 @@ class AuthAdminController {
     async updateProfile(req, res) {
         try {
             
-            let filesPath = req.file
+            let filePath = req.file
             let adminId = req.user.id
-            let { data, msg, success, statusCode } = await adminAuthService.updateProfile(filesPath, adminId, req.body)
+            let { data, msg, success, statusCode } = await adminAuthService.updateProfile(filePath, adminId, req.body)
             if(!success) {
                 response.badRequest(res, msg, statusCode)
             }

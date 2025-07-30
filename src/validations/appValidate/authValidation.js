@@ -29,7 +29,22 @@ const validateVerifyOtp = [
 
 ];
 
+const validateForgetPass = [
+
+  body("email")
+    .notEmpty()
+    .withMessage(constants.MESSAGES.EMAIL_REQUIRED)
+    .trim()
+    .toLowerCase()
+    .isEmail()
+    .withMessage(constants.MESSAGES.EMAIL_INVALID),
+
+  handelValidation
+
+];
+
 module.exports = {
-    validateLogin,
-    validateVerifyOtp
+  validateLogin,
+  validateVerifyOtp,
+  validateForgetPass
 };

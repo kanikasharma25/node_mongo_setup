@@ -24,7 +24,7 @@ const createUserValidate = [
         .notEmpty()
         .withMessage(constants.MESSAGES.EMAIL_REQUIRED)
         .trim()
-        .normalizeEmail() // lowercase and clean up
+        .toLowerCase()
         .isEmail()
         .withMessage(constants.MESSAGES.EMAIL_INVALID),
 

@@ -10,8 +10,9 @@ class AuthAdminService {
 
     // Login user
     async loginUser(body) {
-        let { email, password, deviceToken } = body
+        let { email, password } = body
         const user = await User.findOne({ email: email, role: ROLES.ADMIN });
+
         if (!user) {
             return {
                 success: false,
@@ -71,10 +72,10 @@ class AuthAdminService {
 
     }
 
-    async updateProfile(files, adminId, data) {
+    async updateProfile(file, adminId, data) {
         let updateData = data
-        if (files && files.path) {
-            updateData.profileImage = files.path
+        if (file && file.path) {
+            updateData.profileImage = `/profile/${file.filename}`
             let u = await User.findById(adminId).select('profileImage')
             if (u && u.profileImage) {
                 console.log(' =-=-=-=-=-=-=-=-     Need to delete old image path     =-=-=-=-=-=-=-==-=-= ');
@@ -84,7 +85,6 @@ class AuthAdminService {
                     console.log('Old profile image deleted:', oldImagePath);
                 }
             }
-
         }
         let updateCount = await User.updateOne(
             { _id: adminId },

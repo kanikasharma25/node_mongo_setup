@@ -165,6 +165,59 @@ class AuthAdminService {
         }
     }
 
+    async forgetPass(body) {
+
+        let {email} = body
+        let exists = await User.findOne({ email })
+        if (!exists) {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.NOT_FOUND
+            }
+        }
+
+        let rndm = Math.random().toString();
+        let otp = generateSecureOtp()
+        exists.tokenChecker = rndm
+        exists.otp = otp
+        exists.isOtpVerified = false
+
+        const savedUser = await exists.save();
+
+        const payload = { _id: savedUser._id, email: savedUser.email, tokenChecker: savedUser.tokenChecker };
+        const token = await jwtTokenGenerate(payload)
+
+        // let userData = {
+        //     ...savedUser.toObject(),
+        //     token
+        // }
+
+        const mailOptions = {
+            from: `"Admin Support" <${process.env.SMTP_USER}>`,
+            to: exists.email,
+            subject: "Verification code to reset password",
+            html: `
+          <h3>Verification code to reset password - RPRT</h3>
+          <p>OTP: ${otp}</p>
+        `,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        let dataObj = {
+            token,
+            otp
+        }
+
+        return {
+            success: true,
+            statusCode: HTTP_STATUS.OK,
+            data: dataObj,
+            msg: MESSAGES.OTP_ON_EMAIL
+        }
+    }
+
 }
 
 module.exports = new AuthAdminService();
