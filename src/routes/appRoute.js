@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const authAppController = require('../controllers/appController/authAppController');
-const { validateLogin, validateVerifyOtp, validateForgetPass } = require('../validations/appValidate/authValidation');
+const { validateLogin, validateVerifyOtp, validateForgetPass, validateResetPass } = require('../validations/appValidate/authValidation');
 const { verifyToken } = require('../middlewares/middlewares');
 
 
@@ -15,5 +15,6 @@ router.post('/forgetPass', validateForgetPass, authAppController.forgetPass);
 router.use(verifyToken)
 router.post('/verifyOtp', validateVerifyOtp, authAppController.verifyOtp);
 router.post('/resendOtp', authAppController.resendOtp);
+router.post('/resetPass', validateResetPass, authAppController.resetPass);
 
 module.exports = router;

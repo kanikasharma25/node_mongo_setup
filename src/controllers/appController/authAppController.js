@@ -59,6 +59,20 @@ class UserController {
         }
     }
 
+    async resetPass(req, res) {
+        try {
+            let userId = req.user.id
+            const { success, statusCode, msg, data } = await authAppService.resetPass(req.body, userId);
+
+            if (!success) {
+                return response.badRequest(res, msg, statusCode)
+            }
+            return response.success(res, msg, data, statusCode)
+        } catch (error) {
+            return response.serverError(res, MESSAGES.SERVER_ERROR, error.message, HTTP_STATUS.SERVER_ERROR)
+        }
+    }
+
 }
 
 module.exports = new UserController();

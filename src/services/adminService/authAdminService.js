@@ -186,8 +186,8 @@ class AuthAdminService {
         exists.resetToken = token;
         exists.resetTokenExpires = expireTime;
         await exists.save();
-
-        const resetLink = `baseURL/admin/reset-password?token=${token}`;
+        let appBaseUrl = process.env.APP_BASE_URL
+        const resetLink = `${appBaseUrl}/create-new-password?token=${token}`;
 
         const mailOptions = {
             from: `"Admin Support" <${process.env.SMTP_USER}>`,

@@ -38,9 +38,9 @@ class AuthAdminController {
             let adminId = req.user.id
             let { data, msg, success, statusCode } = await adminAuthService.updateProfile(filePath, adminId, req.body)
             if(!success) {
-                response.badRequest(res, msg, statusCode)
+                return response.badRequest(res, msg, statusCode)
             }
-            response.success(res, msg, data, statusCode)
+            return response.success(res, msg, data, statusCode)
 
         } catch (error) {
             console.log(error, " =-=-=-=-=-=-= ERROR =-=-=-=-=-= ")
@@ -56,9 +56,9 @@ class AuthAdminController {
             let { data, msg, success, statusCode } = await adminAuthService.changePassword( adminId, req.body )
 
             if(!success) {
-                response.badRequest(res, msg, statusCode)
+                return response.badRequest(res, msg, statusCode)
             }
-            response.success(res, msg, data, statusCode)
+            return response.success(res, msg, data, statusCode)
 
         } catch (error) {
             console.log(error, " =-=-=-=-=-=-= ERROR =-=-=-=-=-= ")
@@ -74,9 +74,9 @@ class AuthAdminController {
             let { data, msg, success, statusCode } = await adminAuthService.logOut( adminId )
 
             if(!success) {
-                response.badRequest(res, msg, statusCode)
+                return response.badRequest(res, msg, statusCode)
             }
-            response.success(res, msg, data, statusCode)
+            return response.success(res, msg, data, statusCode)
 
         } catch (error) {
             console.log(error, " =-=-=-=-=-=-= ERROR =-=-=-=-=-= ")
@@ -91,9 +91,9 @@ class AuthAdminController {
             let { data, msg, success, statusCode } = await adminAuthService.forgetPassword( email )
 
             if(!success) {
-                response.badRequest(res, msg, statusCode)
+                return response.badRequest(res, msg, statusCode)
             }
-            response.success(res, msg, data, statusCode)
+            return response.success(res, msg, data, statusCode)
         } catch (error) {
             console.log(error,"error=-=-=-=-=-=-")
             return response.serverError(res, MESSAGES.SERVER_ERROR, error.message)
@@ -106,9 +106,9 @@ class AuthAdminController {
             let { data, msg, success, statusCode } = await adminAuthService.resetPassword( req.body )
 
             if(!success) {
-                response.badRequest(res, msg, statusCode)
+                return response.badRequest(res, msg, statusCode)
             }
-            response.success(res, msg, data, statusCode)
+            return response.success(res, msg, data, statusCode)
         } catch (error) {
             console.log(error,"error=-=-=-=-=-=-")
             return response.serverError(res, MESSAGES.SERVER_ERROR, error.message)

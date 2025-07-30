@@ -43,8 +43,19 @@ const validateForgetPass = [
 
 ];
 
+const validateResetPass = [
+
+  body("newPassword")
+    .notEmpty()
+    .withMessage(constants.MESSAGES.NEW_PASSWORD_REQUIRED),
+
+  handelValidation
+
+];
+
 module.exports = {
   validateLogin,
   validateVerifyOtp,
-  validateForgetPass
+  validateForgetPass,
+  validateResetPass
 };

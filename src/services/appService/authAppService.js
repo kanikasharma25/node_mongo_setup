@@ -221,6 +221,32 @@ class AuthAdminService {
         }
     }
 
+    async resetPass(body, userId) {
+
+        let {newPassword} = body
+        let exists = await User.findOne({ _id: userId })
+        
+        if (!exists) {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.NOT_FOUND
+            }
+        }
+
+        let hashPass = await hashedPassword(newPassword)
+        exists.password = hashPass
+
+        await exists.save();
+
+        return {
+            success: true,
+            statusCode: HTTP_STATUS.OK,
+            data: {},
+            msg: MESSAGES.RESET_PASSWORD_SUCCESS
+        }
+    }
+
 }
 
 module.exports = new AuthAdminService();

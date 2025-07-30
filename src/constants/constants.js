@@ -100,6 +100,11 @@ const OTP_TYPE = {
     RESET_PASS: "reset_pass"
 }
 
+const CMS_TYPE = {
+    PRIVACY: "privacy",
+    TERMS: "terms"
+}
+
 // Export all constants
 module.exports = {
 
@@ -107,5 +112,6 @@ module.exports = {
     MESSAGES,
     ROLES,
     GENDER,
-    OTP_TYPE
+    OTP_TYPE,
+    CMS_TYPE
 };
