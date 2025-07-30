@@ -13,6 +13,7 @@ router.post('/login', validateLogin, authAppController.login);
 
 router.use(verifyToken)
 router.post('/verifyOtp', validateVerifyOtp, authAppController.verifyOtp);
+router.post('/resendOtp', authAppController.resendOtp);
 
 
 

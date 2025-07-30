@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-const { ROLES } = require('../constants/constants.js');
+const { ROLES, GENDER } = require('../constants/constants.js');
 
 const userSchema = new mongoose.Schema(
   {
@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema(
     profileImage: { type: String, default: '' },
     countryCode: { type: String, default: ''},
     phone: {type: String, default: ''},
+    gender: {type: String, enum: [GENDER.MALE, GENDER.FEMALE, GENDER.OTHER], default: GENDER.MALE},
 
     // for forgetPassword logic
     resetToken: { type: String, default: null },

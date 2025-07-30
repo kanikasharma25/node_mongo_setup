@@ -94,7 +94,7 @@ class AuthAdminService {
             }
         }
         user.otp = "",
-        user.isOtpVerified = true;
+            user.isOtpVerified = true;
         let savedUser = await user.save()
 
         const payload = { _id: savedUser._id, email: savedUser.email, tokenChecker: savedUser.tokenChecker };
@@ -110,6 +110,58 @@ class AuthAdminService {
             statusCode: HTTP_STATUS.OK,
             data: userData,
             msg: MESSAGES.OTP_VERIFIED_SUCCESS
+        }
+    }
+
+    async resendOtp(userId) {
+        
+        let user = await User.findOne({ _id: userId })
+        if (!user) {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.NOT_FOUND
+            }
+        }
+
+        let rndm = Math.random().toString();
+        let otp = generateSecureOtp()
+        user.tokenChecker = rndm
+        user.otp = otp
+        user.isOtpVerified = false
+
+        const savedUser = await user.save();
+
+        const payload = { _id: savedUser._id, email: savedUser.email, tokenChecker: savedUser.tokenChecker };
+        const token = await jwtTokenGenerate(payload)
+
+        // let userData = {
+        //     ...savedUser.toObject(),
+        //     token
+        // }
+
+        const mailOptions = {
+            from: `"Admin Support" <${process.env.SMTP_USER}>`,
+            to: user.email,
+            subject: "Verification code for login",
+            html: `
+          <h3>Verification code for login - RPRT</h3>
+          <p>OTP: ${otp}</p>
+        `,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        let dataObj = {
+            token,
+            otp
+        }
+
+        return {
+            success: true,
+            statusCode: HTTP_STATUS.OK,
+            data: dataObj,
+            msg: MESSAGES.OTP_ON_EMAIL
         }
     }
 

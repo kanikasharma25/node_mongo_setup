@@ -87,11 +87,20 @@ const ROLES = {
 
 };
 
+const GENDER = {
+
+    MALE: "male",
+    FEMALE: "female",
+    OTHER: "other"
+
+};
+
 // Export all constants
 module.exports = {
 
     HTTP_STATUS,
     MESSAGES,
     ROLES,
+    GENDER
 
 };
