@@ -90,7 +90,7 @@ class AuthAdminService {
             // Delete old image if exists
             const existingUser = await User.findById(adminId).select('profileImage');
             if (existingUser && existingUser.profileImage) {
-                const oldImagePath = path.join(__dirname, '../../../', existingUser.profileImage);
+                const oldImagePath = path.join(__dirname, '../../uploads/', existingUser.profileImage);
                 if (fs.existsSync(oldImagePath)) {
                     fs.unlinkSync(oldImagePath);
                     console.log('Old profile image deleted:', oldImagePath);

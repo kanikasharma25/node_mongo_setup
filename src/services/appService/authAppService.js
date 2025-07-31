@@ -1,6 +1,8 @@
 
 const User = require('../../models/user.model');
 const { MESSAGES, HTTP_STATUS, ROLES, OTP_TYPE } = require('../../constants/constants');
+const fs = require('fs');
+const path = require('path');
 const { jwtTokenGenerate, transporter, hashedPassword, comparePassword, generateSecureOtp } = require('../../utils/helper');
 const helper = require('../../utils/helper');
 
@@ -275,6 +277,53 @@ class AuthAdminService {
             statusCode: HTTP_STATUS.OK,
             data: {},
             msg: MESSAGES.RESET_PASSWORD_SUCCESS
+        }
+    }
+
+    async updateProfile(file, userId, data) {
+        const allowedFields = ['firstName', 'lastName', 'countryCode', 'phone'];
+        let updateData = {};
+
+        allowedFields.forEach((key) => {
+            if (data[key]) {
+                updateData[key] = data[key];
+            }
+        });
+
+        if (file && file.path) {
+            updateData.profileImage = `/profile/${file.filename}`;
+
+            const existingUser = await User.findById(userId).select('profileImage');
+            if (existingUser && existingUser.profileImage) {
+                const oldImagePath = path.join(__dirname, '../../uploads/', existingUser.profileImage);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                    console.log('Old profile image deleted:', oldImagePath);
+                }
+            }
+        }
+
+        // Update the user
+        const updateResult = await User.updateOne(
+            { _id: userId },
+            { $set: updateData }
+        );
+
+        const updatedUser = await User.findById(userId).select('_id firstName lastName email profileImage gender role countryCode phone');
+
+        if (updateResult.modifiedCount > 0) {
+            return {
+                success: true,
+                statusCode: HTTP_STATUS.OK,
+                msg: MESSAGES.PROFILE_UPDATE_PASS,
+                data: updatedUser
+            };
+        } else {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.PROFILE_UPDATE_FAIL,
+            };
         }
     }
 

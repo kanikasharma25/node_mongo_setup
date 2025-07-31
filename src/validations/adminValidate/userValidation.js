@@ -28,6 +28,9 @@ const createUserValidate = [
         .isEmail()
         .withMessage(constants.MESSAGES.EMAIL_INVALID),
 
+    body("gender")
+        .notEmpty()
+        .withMessage(constants.MESSAGES.EMAIL_REQUIRED),
 
     handelValidation
 

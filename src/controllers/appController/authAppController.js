@@ -74,6 +74,23 @@ class UserController {
         }
     }
 
+    async updateProfile(req, res) {
+        try {
+
+            let filePath = req.file
+            let userId = req.user.id
+            let { data, msg, success, statusCode } = await authAppService.updateProfile(filePath, userId, req.body)
+            if (!success) {
+                return response.badRequest(res, msg, statusCode)
+            }
+            return response.success(res, msg, data, statusCode)
+
+        } catch (error) {
+            console.log(error, " =-=-=-=-=-=-= ERROR =-=-=-=-=-= ")
+            return response.serverError(res, MESSAGES.SERVER_ERROR, error.message, HTTP_STATUS.SERVER_ERROR)
+        }
+    }
+
 }
 
 module.exports = new UserController();
