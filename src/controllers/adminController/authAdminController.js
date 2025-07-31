@@ -51,9 +51,9 @@ class AuthAdminController {
     async changePassword(req, res) {
         try {
 
-            let adminId = req.user.id
+            let userId = req.user.id
             
-            let { data, msg, success, statusCode } = await adminAuthService.changePassword( adminId, req.body )
+            let { data, msg, success, statusCode } = await adminAuthService.changePassword( userId, req.body )
 
             if(!success) {
                 return response.badRequest(res, msg, statusCode)

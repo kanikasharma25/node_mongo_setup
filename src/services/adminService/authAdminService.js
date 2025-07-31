@@ -165,10 +165,10 @@ class AuthAdminService {
     }
     
 
-    async changePassword(adminId, data) {
-        let admin = await User.findById(adminId)
+    async changePassword(userId, data) {
+        let user = await User.findById(userId)
 
-        let isMatched = await comparePassword(data.oldPassword, admin.password)
+        let isMatched = await comparePassword(data.oldPassword, user.password)
 
         if (!isMatched) {
             return {
@@ -178,8 +178,8 @@ class AuthAdminService {
             }
         }
         let cryptedPass = await hashedPassword(data.newPassword)
-        let adminUpdate = await User.updateOne(
-            { _id: adminId },
+        let userUpdate = await User.updateOne(
+            { _id: userId },
             {
                 $set: {
                     password: cryptedPass

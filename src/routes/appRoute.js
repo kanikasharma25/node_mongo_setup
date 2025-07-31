@@ -7,6 +7,8 @@ const { verifyToken } = require('../middlewares/middlewares');
 const { badRequest } = require('../utils/response');
 const { MESSAGES, HTTP_STATUS } = require('../constants/constants');
 const cmsAdminController = require('../controllers/adminController/cmsAdminController');
+const { validateAdminchangePassword } = require('../validations/adminValidate/authValidation');
+const authAdminController = require('../controllers/adminController/authAdminController');
 
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
@@ -19,6 +21,7 @@ router.use(verifyToken)
 router.post('/verifyOtp', validateVerifyOtp, authAppController.verifyOtp);
 router.post('/resendOtp/:type', authAppController.resendOtp);
 router.post('/resetPass', validateResetPass, authAppController.resetPass);
+router.patch('/changePassword', validateAdminchangePassword, authAdminController.changePassword);
 
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
