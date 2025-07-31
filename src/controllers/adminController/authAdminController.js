@@ -69,9 +69,9 @@ class AuthAdminController {
     async logOut(req, res) {
         try {
 
-            let adminId = req.user.id
+            let userId = req.user.id
             
-            let { data, msg, success, statusCode } = await adminAuthService.logOut( adminId )
+            let { data, msg, success, statusCode } = await adminAuthService.logOut( userId )
 
             if(!success) {
                 return response.badRequest(res, msg, statusCode)

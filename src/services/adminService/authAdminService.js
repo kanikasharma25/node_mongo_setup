@@ -72,48 +72,6 @@ class AuthAdminService {
 
     }
 
-    async ex_updateProfile(file, adminId, data) {
-        let updateData = data
-        if (file && file.path) {
-            updateData.profileImage = `/profile/${file.filename}`
-            let u = await User.findById(adminId).select('profileImage')
-            if (u && u.profileImage) {
-                console.log(' =-=-=-=-=-=-=-=-     Need to delete old image path     =-=-=-=-=-=-=-==-=-= ');
-                const oldImagePath = path.join(__dirname, '../../../', u.profileImage);
-                if (fs.existsSync(oldImagePath)) {
-                    fs.unlinkSync(oldImagePath);
-                    console.log('Old profile image deleted:', oldImagePath);
-                }
-            }
-        }
-        let updateCount = await User.updateOne(
-            { _id: adminId },
-            {
-                $set: {
-                    ...updateData
-                }
-            }
-        )
-
-        let user = await User.findById(adminId).select('_id firstName lastName email profileImage')
-
-        if (updateCount.modifiedCount > 0) {
-            return {
-                success: true,
-                statusCode: HTTP_STATUS.OK,
-                msg: MESSAGES.PROFILE_UPDATE_PASS,
-                data: user
-            }
-        } else {
-            return {
-                success: false,
-                statusCode: HTTP_STATUS.BAD_REQUEST,
-                msg: MESSAGES.PROFILE_UPDATE_FAIL,
-            }
-        }
-
-    }
-
     async updateProfile(file, adminId, data) {
         const allowedFields = ['firstName', 'lastName'];
         let updateData = {};
@@ -164,7 +122,6 @@ class AuthAdminService {
         }
     }
     
-
     async changePassword(userId, data) {
         let user = await User.findById(userId)
 
@@ -196,10 +153,10 @@ class AuthAdminService {
 
     }
 
-    async logOut(adminId, data) {
+    async logOut(userId, data) {
 
-        let adminUpdate = await User.updateOne(
-            { _id: adminId },
+        let userUpdate = await User.updateOne(
+            { _id: userId },
             {
                 $set: {
                     tokenChecker: "",

@@ -22,6 +22,7 @@ router.post('/verifyOtp', validateVerifyOtp, authAppController.verifyOtp);
 router.post('/resendOtp/:type', authAppController.resendOtp);
 router.post('/resetPass', validateResetPass, authAppController.resetPass);
 router.patch('/changePassword', validateAdminchangePassword, authAdminController.changePassword);
+router.get('/logOut', authAdminController.logOut);
 
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
