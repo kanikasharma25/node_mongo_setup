@@ -15,6 +15,9 @@ const HTTP_STATUS = {
 // Common Messages
 const MESSAGES = {
 
+    // gender
+    GENDER_ALLOWED: "Gender must be one of these : ",
+
     // cms
     CMS_LOADED: "Cms content loaded",
     CMS_CONTENT_REQ: "Content is required",
