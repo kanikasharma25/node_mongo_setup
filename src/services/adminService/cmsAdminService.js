@@ -36,7 +36,7 @@ class CmsService {
         }
 
         exists.content= content
-
+        await exists.save()
         return {
             success: true,
             statusCode: HTTP_STATUS.OK,

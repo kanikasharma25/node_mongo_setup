@@ -6,6 +6,7 @@ const { validateLogin, validateVerifyOtp, validateForgetPass, validateResetPass 
 const { verifyToken } = require('../middlewares/middlewares');
 const { badRequest } = require('../utils/response');
 const { MESSAGES, HTTP_STATUS } = require('../constants/constants');
+const cmsAdminController = require('../controllers/adminController/cmsAdminController');
 
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
@@ -18,6 +19,12 @@ router.use(verifyToken)
 router.post('/verifyOtp', validateVerifyOtp, authAppController.verifyOtp);
 router.post('/resendOtp/:type', authAppController.resendOtp);
 router.post('/resetPass', validateResetPass, authAppController.resetPass);
+
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-    CMS      =-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
+router.get('/cms/:type', cmsAdminController.getCms);
 
 
 

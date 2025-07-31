@@ -72,7 +72,7 @@ class AuthAdminService {
 
     }
 
-    async updateProfile(file, adminId, data) {
+    async ex_updateProfile(file, adminId, data) {
         let updateData = data
         if (file && file.path) {
             updateData.profileImage = `/profile/${file.filename}`
@@ -113,6 +113,57 @@ class AuthAdminService {
         }
 
     }
+
+    async updateProfile(file, adminId, data) {
+        const allowedFields = ['firstName', 'lastName'];
+        let updateData = {};
+    
+        // Pick only allowed fields from input
+        allowedFields.forEach((key) => {
+            if (data[key]) {
+                updateData[key] = data[key];
+            }
+        });
+    
+        // If profile image is being updated
+        if (file && file.path) {
+            updateData.profileImage = `/profile/${file.filename}`;
+    
+            // Delete old image if exists
+            const existingUser = await User.findById(adminId).select('profileImage');
+            if (existingUser && existingUser.profileImage) {
+                const oldImagePath = path.join(__dirname, '../../../', existingUser.profileImage);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                    console.log('Old profile image deleted:', oldImagePath);
+                }
+            }
+        }
+    
+        // Update the user
+        const updateResult = await User.updateOne(
+            { _id: adminId },
+            { $set: updateData }
+        );
+    
+        const updatedUser = await User.findById(adminId).select('_id firstName lastName email profileImage');
+    
+        if (updateResult.modifiedCount > 0) {
+            return {
+                success: true,
+                statusCode: HTTP_STATUS.OK,
+                msg: MESSAGES.PROFILE_UPDATE_PASS,
+                data: updatedUser
+            };
+        } else {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.PROFILE_UPDATE_FAIL,
+            };
+        }
+    }
+    
 
     async changePassword(adminId, data) {
         let admin = await User.findById(adminId)
@@ -187,7 +238,12 @@ class AuthAdminService {
         exists.resetTokenExpires = expireTime;
         await exists.save();
         let appBaseUrl = process.env.APP_BASE_URL
+        console.log(appBaseUrl, "=-=-=-=-=-=-=-=-=-    appBaseUrl     =-=-=-=-=-=-=-=-=-=-")
+
         const resetLink = `${appBaseUrl}/create-new-password?token=${token}`;
+console.log(resetLink, "=-=-=-=-=-=-=-=-=-    resetLink     =-=-=-=-=-=-=-=-=-=-")
+
+
 
         const mailOptions = {
             from: `"RPRT Support" <${process.env.SMTP_USER}>`,

@@ -10,6 +10,7 @@ const { createUserValidate } = require('../validations/adminValidate/userValidat
 const { badRequest } = require('../utils/response');
 const { MESSAGES, HTTP_STATUS } = require('../constants/constants');
 const cmsAdminController = require('../controllers/adminController/cmsAdminController');
+const { cmsValidation } = require('../validations/adminValidate/cmsValidation');
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-    AUTH      =-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
@@ -36,7 +37,8 @@ router.post('/createUser', createUserValidate, userController.createUser)
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-    CMS      =-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
-router.get('/cms/:type', createUserValidate, cmsAdminController.getCms)
+router.get('/cms/:type', cmsAdminController.getCms)
+router.patch('/cms', cmsValidation, cmsAdminController.updateCms)
 
 router.use((req, res) => {
     badRequest(res, MESSAGES.INVALID_ROUTE, HTTP_STATUS.NOT_FOUND)

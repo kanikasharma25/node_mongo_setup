@@ -17,6 +17,7 @@ const MESSAGES = {
 
     // cms
     CMS_LOADED: "Cms content loaded",
+    CMS_CONTENT_REQ: "Content is required",
 
     // route
     INVALID_ROUTE: "Invalid route",
@@ -33,6 +34,8 @@ const MESSAGES = {
     COUNTRYCODE_REQ: "Country code is required",
     PHONE_REQ: "Phone number is required",
     DEVICETOKEN_REQ: "required",
+    ID_REQ: "Id is required",
+
 
     // user
     USER_CREATE_SUCCESS: "User created successfully",
