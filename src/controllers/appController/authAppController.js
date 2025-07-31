@@ -34,7 +34,8 @@ class UserController {
         try {
 
             let userId = req.user.id
-            const { success, statusCode, msg, data } = await authAppService.resendOtp(userId);
+            let type = req.params.type
+            const { success, statusCode, msg, data } = await authAppService.resendOtp(userId, type);
 
             if (!success) {
                 return response.badRequest(res, msg, statusCode)

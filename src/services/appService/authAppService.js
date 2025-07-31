@@ -54,14 +54,23 @@ class AuthAdminService {
         // }
 
         const mailOptions = {
-            from: `"Admin Support" <${process.env.SMTP_USER}>`,
+            from: `"RPRT Support" <${process.env.SMTP_USER}>`,
             to: user.email,
-            subject: "Verification code for login",
+            subject: "Your RPRT Login Verification Code",
             html: `
-          <h3>Verification code for login - RPRT</h3>
-          <p>OTP: ${otp}</p>
-        `,
+                <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+                    <h2 style="color: #007bff;">RPRT Login Verification</h2>
+                    <p>Hello ${user.firstName || 'User'},</p>
+                    <p>Use the following One-Time Password (OTP) to complete your login:</p>
+                    <h3 style="color: #000; font-size: 24px; letter-spacing: 2px;">${otp}</h3>
+                    <p>This OTP is valid for a limited time and can only be used once.</p>
+                    <p>If you did not request this code, please ignore this message.</p>
+                    <br />
+                    <p>Regards,<br />RPRT Support Team</p>
+                </div>
+            `,
         };
+        
 
         await transporter.sendMail(mailOptions);
 
@@ -115,7 +124,7 @@ class AuthAdminService {
         }
     }
 
-    async resendOtp(userId) {
+    async resendOtp(userId, type) {
         
         let user = await User.findOne({ _id: userId })
         if (!user) {
@@ -142,15 +151,26 @@ class AuthAdminService {
         //     token
         // }
 
+        let subjectMainText = type == 'login' ? 'Login' : 'Reset password'
+
         const mailOptions = {
-            from: `"Admin Support" <${process.env.SMTP_USER}>`,
+            from: `"RPRT Support" <${process.env.SMTP_USER}>`,
             to: user.email,
-            subject: "Verification code for login",
+            subject:`Your RPRT ${subjectMainText} Verification Code`,
             html: `
-          <h3>Verification code for login - RPRT</h3>
-          <p>OTP: ${otp}</p>
-        `,
+                <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+                    <h2 style="color: #007bff;">RPRT Login Verification</h2>
+                    <p>Hello ${user.firstName || 'User'},</p>
+                    <p>Use the following One-Time Password (OTP) to complete your login:</p>
+                    <h3 style="color: #000; font-size: 24px; letter-spacing: 2px;">${otp}</h3>
+                    <p>This OTP is valid for a limited time and can only be used once.</p>
+                    <p>If you did not request this code, please ignore this message.</p>
+                    <br />
+                    <p>Regards,<br />RPRT Support Team</p>
+                </div>
+            `,
         };
+        
 
         await transporter.sendMail(mailOptions);
 
@@ -197,14 +217,24 @@ class AuthAdminService {
         // }
 
         const mailOptions = {
-            from: `"Admin Support" <${process.env.SMTP_USER}>`,
+            from: `"RPRT Support" <${process.env.SMTP_USER}>`,
             to: exists.email,
-            subject: "Verification code to reset password",
+            subject: "RPRT Password Reset Verification Code",
             html: `
-          <h3>Verification code to reset password - RPRT</h3>
-          <p>OTP: ${otp}</p>
-        `,
+                <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+                    <h2 style="color: #007bff;">Password Reset Verification</h2>
+                    <p>Hi ${exists.firstName || 'User'},</p>
+                    <p>We received a request to reset your RPRT account password.</p>
+                    <p>Please use the following One-Time Password (OTP) to proceed:</p>
+                    <h3 style="font-size: 24px; color: #000;">${otp}</h3>
+                    <p>This OTP is valid for a limited time and can only be used once.</p>
+                    <p>If you did not request this, you can safely ignore this email.</p>
+                    <br />
+                    <p>Regards,<br />RPRT Support Team</p>
+                </div>
+            `,
         };
+        
 
         await transporter.sendMail(mailOptions);
 

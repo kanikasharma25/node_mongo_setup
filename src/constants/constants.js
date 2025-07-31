@@ -15,6 +15,9 @@ const HTTP_STATUS = {
 // Common Messages
 const MESSAGES = {
 
+    // route
+    INVALID_ROUTE: "Invalid route",
+
     // otp
     OTP_ON_EMAIL: "Otp has been sent on your email",
     OTP_REQ: "Otp is required",

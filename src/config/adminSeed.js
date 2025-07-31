@@ -5,6 +5,7 @@ const { ROLES, CMS_TYPE } = require('../constants/constants');
 const { hashedPassword } = require('../utils/helper');
 
 const adminSeed = async (email, password) => {
+    
     const exists = await User.findOne({role: 'admin'})
     const existsPrivacy = await Cms.findOne({type: CMS_TYPE.PRIVACY})
     const existsTerms = await Cms.findOne({type: CMS_TYPE.TERMS})
@@ -25,19 +26,18 @@ const adminSeed = async (email, password) => {
     if(!existsPrivacy){
         await Cms.create({
             title: 'Privacy Policies',
-            content: 'Place content for privacy policies here'
+            content: 'Place content for privacy policies here',
+            type: CMS_TYPE.PRIVACY
         })
     }
 
     if(!existsTerms){
         await Cms.create({
             title: 'Terms of services',
-            content: 'Place content for terms of services here'
+            content: 'Place content for terms of services here',
+            type: CMS_TYPE.TERMS
         })
     }
-
-
-
 
 };
 

@@ -190,16 +190,29 @@ class AuthAdminService {
         const resetLink = `${appBaseUrl}/create-new-password?token=${token}`;
 
         const mailOptions = {
-            from: `"Admin Support" <${process.env.SMTP_USER}>`,
+            from: `"RPRT Support" <${process.env.SMTP_USER}>`,
             to: exists.email,
-            subject: "Password Reset Link",
+            subject: "RPRT - Password Reset Request",
             html: `
-      <h3>Password Reset Requested</h3>
-      <p>Click below to reset your password:</p>
-      <a href="${resetLink}">${resetLink}</a>
-      <p>This link will expire in 15 minutes.</p>
-    `,
+                <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                    <h2>Password Reset Request</h2>
+                    <p>Hello ${exists.firstName || 'User'},</p>
+                    <p>We received a request to reset your RPRT account password. Click the link below to set a new password:</p>
+                    <p>
+                        <a href="${resetLink}" style="background-color: #007bff; color: #fff; padding: 10px 15px; text-decoration: none; border-radius: 4px;">
+                            Reset Password
+                        </a>
+                    </p>
+                    <p>If the button above doesn't work, you can also copy and paste the following URL into your browser:</p>
+                    <p><a href="${resetLink}">${resetLink}</a></p>
+                    <p><strong>Note:</strong> This link will expire in 15 minutes for security reasons.</p>
+                    <p>If you did not request this change, you can safely ignore this email.</p>
+                    <br/>
+                    <p>Regards,<br/>RPRT Support Team</p>
+                </div>
+            `,
         };
+        
 
         await transporter.sendMail(mailOptions);
         let data = {
