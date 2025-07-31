@@ -15,6 +15,9 @@ const HTTP_STATUS = {
 // Common Messages
 const MESSAGES = {
 
+    // cms
+    CMS_LOADED: "Cms content loaded",
+
     // route
     INVALID_ROUTE: "Invalid route",
 
