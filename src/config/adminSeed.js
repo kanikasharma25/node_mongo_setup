@@ -41,4 +41,4 @@ const adminSeed = async (email, password) => {
 
 };
 
-adminSeed('admin@gmail.com', '123456', );
+adminSeed('admin@gmail.com', 'admin@2025', );
