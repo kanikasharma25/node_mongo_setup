@@ -30,7 +30,7 @@ const createUserValidate = [
 
     body("gender")
         .notEmpty()
-        .withMessage(constants.MESSAGES.EMAIL_REQUIRED)
+        .withMessage(constants.MESSAGES.GENDER_REQ)
         .isIn(Object.values(constants.GENDER))
         .withMessage(`${constants.MESSAGES.GENDER_ALLOWED} ${Object.values(constants.GENDER).join(', ')}`),
 

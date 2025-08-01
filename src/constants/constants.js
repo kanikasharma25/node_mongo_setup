@@ -20,6 +20,7 @@ const MESSAGES = {
 
     // gender
     GENDER_ALLOWED: "Gender must be one of these : ",
+    GENDER_REQ: "Gender is required",
 
     // cms
     CMS_LOADED: "Cms content loaded",
@@ -113,7 +114,7 @@ const GENDER = {
 
     MALE: "male",
     FEMALE: "female",
-    OTHER: "other"
+    OTHER: "others"
 
 };
 

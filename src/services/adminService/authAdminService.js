@@ -177,7 +177,7 @@ class AuthAdminService {
 
     async forgetPassword(email) {
 
-        let exists = await User.findOne({ email: email, role: ROLES.ADMIN })
+        let exists = await User.findOne({email: email, role: ROLES.ADMIN })
 
         if (!exists) {
             return {
@@ -193,7 +193,7 @@ class AuthAdminService {
 
 
         exists.resetToken = token;
-        exists.resetTokenExpires = expireTime;
+        exists.resetTokenExpires = expireTime; 
         await exists.save();
         let appBaseUrl = process.env.APP_BASE_URL
         console.log(appBaseUrl, "=-=-=-=-=-=-=-=-=-    appBaseUrl     =-=-=-=-=-=-=-=-=-=-")
