@@ -111,6 +111,28 @@ class UserService {
 
   }
 
+  async deleteUser(userId) {
+    
+    await User.updateOne(
+      {_id: userId},
+      {
+        $set: {
+          deletedAt: true
+        }
+      }
+    );
+
+    return {
+      success: true,
+      statusCode: HTTP_STATUS.OK,
+      data: {},
+      msg: MESSAGES.USER_DELETED
+    }
+
+  }
+
+  
+
 }
 
 module.exports = new UserService();

@@ -33,7 +33,8 @@ router.get('/logOut', authAdminController.logOut);
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 router.post('/createUser', createUserValidate, userController.createUser)
 router.get('/listUsers', userController.listUsers)
-router.get('/statusUserUpdate', validateUserStatusUpdate, userController.statusUserUpdate)
+router.patch('/statusUserUpdate', validateUserStatusUpdate, userController.statusUserUpdate)
+router.delete('/deleteUser/:userId', userController.deleteUser)
 
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-

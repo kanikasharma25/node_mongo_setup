@@ -48,6 +48,7 @@ const MESSAGES = {
     USER_LIST_LOADED: "Users list loaded",
     USER_ID_REQ: "User id is required",
     USER_STATUS_UPDATED: "User status updated successfully",
+    USER_DELETED: "User deleted successfully",
 
     // reset password
     RESET_PASSWORD_EMAIL_DELIVERED: 'Reset password link has been sent to your email successfully',
