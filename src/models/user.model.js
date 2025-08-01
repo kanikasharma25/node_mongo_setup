@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema(
     countryCode: { type: String, default: ''},
     phone: {type: String, default: ''},
     gender: {type: String, enum: [GENDER.MALE, GENDER.FEMALE, GENDER.OTHER], default: GENDER.MALE},
+    deletedAt: {type: Boolean, default: false},
+    status: {type: Boolean, default: true},
 
     // for forgetPassword logic
     resetToken: { type: String, default: null },

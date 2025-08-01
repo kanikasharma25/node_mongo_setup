@@ -6,7 +6,7 @@ const router = express.Router();
 const upload = require('../middlewares/upload.middleware');
 const authAdminController = require('../controllers/adminController/authAdminController');
 const userController = require('../controllers/adminController/userController');
-const { createUserValidate } = require('../validations/adminValidate/userValidation');
+const { createUserValidate, validateUserStatusUpdate } = require('../validations/adminValidate/userValidation');
 const { badRequest } = require('../utils/response');
 const { MESSAGES, HTTP_STATUS } = require('../constants/constants');
 const cmsAdminController = require('../controllers/adminController/cmsAdminController');
@@ -32,6 +32,8 @@ router.get('/logOut', authAdminController.logOut);
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-    USER      =-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-
 router.post('/createUser', createUserValidate, userController.createUser)
+router.get('/listUsers', userController.listUsers)
+router.get('/statusUserUpdate', validateUserStatusUpdate, userController.statusUserUpdate)
 
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-

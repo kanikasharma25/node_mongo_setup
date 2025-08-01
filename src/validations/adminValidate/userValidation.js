@@ -39,6 +39,24 @@ const createUserValidate = [
 
 ];
 
+const validateUserStatusUpdate = [
+
+    body("userId")
+        .notEmpty()
+        .withMessage(constants.MESSAGES.USER_ID_REQ),
+
+    body("status")
+        .notEmpty()
+        .withMessage(constants.MESSAGES.STATUS_REQ)
+        .isIn([true, false])
+        .withMessage('Status value can only be; true or false'),
+
+
+    handelValidation
+
+];
+
 module.exports = {
     createUserValidate,
+    validateUserStatusUpdate
 };

@@ -15,6 +15,9 @@ const HTTP_STATUS = {
 // Common Messages
 const MESSAGES = {
 
+    // status
+    STATUS_REQ: "Status is required",
+
     // gender
     GENDER_ALLOWED: "Gender must be one of these : ",
 
@@ -42,12 +45,17 @@ const MESSAGES = {
 
     // user
     USER_CREATE_SUCCESS: "User created successfully",
+    USER_LIST_LOADED: "Users list loaded",
+    USER_ID_REQ: "User id is required",
+    USER_STATUS_UPDATED: "User status updated successfully",
 
     // reset password
     RESET_PASSWORD_EMAIL_DELIVERED: 'Reset password link has been sent to your email successfully',
     RESET_TOKEN_REQUIRED: "Reset token is required",
     RESET_PASSWORD_SUCCESS: "Reset password successfully, Now login with new password",
     RESET_TOKEN_EXPIRED: "Reset token has expired. Please request a new one.",
+    RESET_PASS_MUST_DIFF_THAN_OLD: "New password can't be as same as old password",
+    INVALID_RESET_PASS_TOKEN: "Invalid reset password token",
 
     // profile
     PROFILE_UPDATE_PASS: "Profile updated successfully",
@@ -66,6 +74,7 @@ const MESSAGES = {
     EMAIL_REQUIRED: "Email is required",
     EMAIL_INVALID: "Invalid email",
     EMAIL_EXISTS: "Email already exists",
+    EMAIL_NOT_FOUND: "Emailnotfound",
 
     // image
     JPG_PNG_ALLOW_ONLY: "Invalid file type. Only JPEG and PNG allowed.",

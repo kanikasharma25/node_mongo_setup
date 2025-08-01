@@ -5,6 +5,7 @@ const { jwtTokenGenerate, transporter, hashedPassword, comparePassword } = requi
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const bcrypt = require('bcrypt')
 
 class AuthAdminService {
 
@@ -182,7 +183,7 @@ class AuthAdminService {
             return {
                 success: false,
                 statusCode: HTTP_STATUS.BAD_REQUEST,
-                msg: MESSAGES.NOT_FOUND,
+                msg: MESSAGES.EMAIL_NOT_FOUND,
             }
         }
 
@@ -248,7 +249,7 @@ console.log(resetLink, "=-=-=-=-=-=-=-=-=-    resetLink     =-=-=-=-=-=-=-=-=-=-
             return {
                 success: false,
                 statusCode: HTTP_STATUS.BAD_REQUEST,
-                msg: MESSAGES.NOT_FOUND,
+                msg: MESSAGES.INVALID_RESET_PASS_TOKEN,
             }
         }
 
@@ -257,6 +258,15 @@ console.log(resetLink, "=-=-=-=-=-=-=-=-=-    resetLink     =-=-=-=-=-=-=-=-=-=-
                 success: false,
                 statusCode: HTTP_STATUS.UNAUTHORIZED,
                 msg: MESSAGES.RESET_TOKEN_EXPIRED,
+            };
+        }
+
+        let samePass = bcrypt.compareSync(body.newPassword, exists.password)
+        if(samePass){
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                msg: MESSAGES.RESET_PASS_MUST_DIFF_THAN_OLD,
             };
         }
 

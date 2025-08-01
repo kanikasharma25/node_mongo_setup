@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { jwtTokenGenerate, transporter, hashedPassword, comparePassword, generateSecureOtp } = require('../../utils/helper');
 const helper = require('../../utils/helper');
+const bcrypt = require('bcrypt')
 
 class AuthAdminService {
 
@@ -193,12 +194,12 @@ class AuthAdminService {
     async forgetPass(body) {
 
         let { email } = body
-        let exists = await User.findOne({ email })
+        let exists = await User.findOne({ email, role: ROLES.SALES_REP })
         if (!exists) {
             return {
                 success: false,
                 statusCode: HTTP_STATUS.BAD_REQUEST,
-                msg: MESSAGES.NOT_FOUND
+                msg: MESSAGES.EMAIL_NOT_FOUND
             }
         }
 
@@ -264,6 +265,16 @@ class AuthAdminService {
                 success: false,
                 statusCode: HTTP_STATUS.BAD_REQUEST,
                 msg: MESSAGES.NOT_FOUND
+            }
+        }
+
+        let samePass = bcrypt.compareSync(newPassword, exists.password)
+        if(samePass) {
+            return {
+                success: false,
+                statusCode: HTTP_STATUS.BAD_REQUEST,
+                data: {},
+                msg: MESSAGES.RESET_PASS_MUST_DIFF_THAN_OLD
             }
         }
 
