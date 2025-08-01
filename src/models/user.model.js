@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema(
     resetToken: { type: String, default: null },
     resetTokenExpires: { type: Date, default: null },
 
+
+    // 🔐 Salesforce OAuth tokens
+    sfAccessToken: { type: String, default: null },
+    sfRefreshToken: { type: String, default: null },
+    sfInstanceUrl: { type: String, default: null },
+
   },
   {
     timestamps: true,

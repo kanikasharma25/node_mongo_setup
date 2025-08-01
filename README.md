@@ -5,6 +5,7 @@ The RP-RT Prospecting Application will support outbound sales reps by helping th
 - Node.js
 - Express.js
 - MongoDB
+- salesforce
 
 ## Installation
 git clone repoPath
@@ -29,3 +30,4 @@ need all the required keys for project
 | express-validator | ^7.2.1    | Middleware to validate and sanitize incoming request data (e.g. email, password). |
 | nodemailer        | ^7.0.5    | Used to send emails |                                                               
 | mongan            | ^1.10.1   | used to get api proper log while development |
+| axios             | ^1.11.0   | used to make HTTP requests (like token exchange and Salesforce API calls) |
